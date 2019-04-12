@@ -13,7 +13,7 @@ _DIR_SQL="$_VHOST/upload/sql"
 # Git Configuration
 _GIT_URLS="bitbucket.org/kominfopklcity/web-application-simpeg.git"
 _GIT_USER="psipdinkominfo"
-_GIT_PASS=""
+_GIT_PASS="psipdeveloper2019"
 
 _RESULT=`mktemp`
 _FILE_SQL=()
@@ -21,7 +21,10 @@ _FILE_SQL=()
 webserver_linux(){
 echo "Installing Webserver ..."
 echo "========================"
-# sudo apt-get update
+# Install Aplikasi Pendukung
+sudo apt-get update
+sudo apt-get install git
+# Webserver Apache
 sudo apt-get install apache2 -y
 sudo apt-get install curl -y
 echo
@@ -73,7 +76,7 @@ CustomLog ${_APACHE_LOG_DIR}/access.$_APP_NAME.log combined
 </VirtualHost>
 EOF
 sudo a2dissite 000-default.conf
-sudo a2ensite simpeg.vhost.conf
+sudo a2ensite $_APP_NAME.local.conf
 sudo a2enmod rewrite
 sudo apache2ctl configtest
 sudo systemctl reload apache2
@@ -97,14 +100,6 @@ sudo sed -i 's:^innodb_log_file_size.*:innodb_log_file_size=10M:g' $fileConfigMy
 sudo sed -i 's:^innodb_log_buffer_size.*:innodb_log_buffer_size=64M:g' $fileConfigMySQL
 sudo sed -i 's:^innodb_flush_log_at_trx_commit.*:innodb_flush_log_at_trx_commit=1:g' $fileConfigMySQL
 sudo sed -i 's:^innodb_lock_wait_timeout.*:innodb_lock_wait_timeout=180M:g' $fileConfigMySQL
-echo "Setup Folder Application ..."
-echo "============================"
-sudo chown -R $USER:www-data $_VHOST
-sudo find $_VHOST/upload -type d -exec chmod 770 {} \;
-sudo find $_VHOST/upload -type d -exec chmod g+s {} \;
-sudo find $_VHOST/upload -type f -exec chmod 660 {} \; 2>&1 | grep -v "Operation not permitted"
-sudo systemctl reload apache2
-echo "Configuration OK"
 }
 
 #Custom Function
@@ -140,20 +135,6 @@ for m in $modul; do
 done
 }
 
-create_user_db(){
-echo "Created User Database ..."
-echo "========================="
-_DB_CONFIG=`php $_VHOST/simpeg.php --db-config`
-_DB_HOST=`echo $_DB_CONFIG | cut -d " " -f1 | cut -d ":" -f2`
-_DB_USER=`echo $_DB_CONFIG | cut -d " " -f2 | cut -d ":" -f2`
-_DB_PASS=`echo $_DB_CONFIG | cut -d " " -f3 | cut -d ":" -f2`
-_DB_NAME=`echo $_DB_CONFIG | cut -d " " -f4 | cut -d ":" -f2`
-sudo mysql -u root -e "CREATE USER '$_DB_USER'@'$_DB_HOST' IDENTIFIED BY '$_DB_PASS'"
-sudo mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO '$_DB_USER'@'$_DB_HOST'"
-sudo mysql -u root -e "UPDATE mysql.user SET plugin='mysql_native_password' WHERE mysql.user.user='$_DB_USER'"
-sudo mysql -u root -e "CREATE DATABASE $_DB_NAME CHARACTER SET utf8 COLLATE utf8_general_ci"
-}
-
 form_import_db(){
 # List file sql
 nomer=1
@@ -182,7 +163,17 @@ vAPACHE=`sudo apachectl -V | grep "Server version"`
 vPHP="PHP version: `php -v|awk '{print $2}'|head -n 1`"
 # Versi MySQL
 vMYSQL="MySQL version: `mysql --version|awk '{ print $5 }'`"
-result="\nSelamat Aplikasi simpeg 2019 telah terinstall\nBerikut detail sistem yang terinstall:\n$vAPACHE\n$vPHP\n$vMYSQL\n$1"
+result="
+Selamat Aplikasi simpeg 2019 telah terinstall
+Berikut detail sistem yang terinstall:
+$vAPACHE
+$vPHP
+$vMYSQL
+$1
+
+Langkah selanjutnya, silahkan konfigurasi variabel environment dan cronjob 
+(lihat panduannya di $_GIT_URLS)
+"
 dialog --title "Instalation Complete" --backtitle "$APPLICATION" --msgbox "$result" 20 100;
 clear
 exit
@@ -226,8 +217,11 @@ else
     echo "Installing Applicaton"
     echo "====================="
     git clone https://$user_git:$pass_git@$_GIT_URLS $_VHOST
+    echo "Configuring Application ..."
+    echo "============================"
     install_modul config_app
-    create_user_db
+    php $_VHOST/simpeg.php --app-init
+    echo "Configuration OK"
     
     # Restore DB
     show_form form_import_db

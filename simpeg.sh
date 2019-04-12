@@ -16,7 +16,7 @@ _GIT_USER="psipdinkominfo"
 _GIT_PASS="psipdeveloper2019"
 
 _RESULT=`mktemp`
-_FILE_SQL=()
+_FILE_SQL=""
 
 webserver_linux(){
 echo "Installing Webserver ..."

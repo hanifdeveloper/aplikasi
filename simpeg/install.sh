@@ -253,14 +253,14 @@ else
     echo "============================"
     install_modul config_app
     php $_VHOST/simpeg.php --app-init
+    # Reload Configuration
+    exec bash
     echo "Configuration OK"
     
     # Restore DB
     show_form form_import_db
     input=`cat $_RESULT`
     action_import_db "${_FILE_SQL[$input-1]}"
-    echo "Restarting Server ..."
-    sleep 2s
 fi
 
 rm -f $_RESULT # Clear Result

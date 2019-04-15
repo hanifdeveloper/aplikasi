@@ -61,4 +61,6 @@ sudo find / -iname 'mysql*' -exec rm -rf {} \;
 
 # Removing Signature
 delete_signature_app
+echo "Restarting Server ..."
+sleep 2s
 sudo reboot

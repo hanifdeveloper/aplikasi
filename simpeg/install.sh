@@ -259,7 +259,8 @@ else
     show_form form_import_db
     input=`cat $_RESULT`
     action_import_db "${_FILE_SQL[$input-1]}"
-    sudo reboot
+    echo "Restarting Server ..."
+    sleep 2s
 fi
 
 rm -f $_RESULT # Clear Result

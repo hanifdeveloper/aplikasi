@@ -5,7 +5,7 @@
 bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg/install.sh)
 ``` 
 
-## Unistaller
+## Uninstaller
 ```
 bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg/uninstall.sh)
 ```

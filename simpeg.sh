@@ -1,5 +1,4 @@
 #!/bin/bash
-echo 'TESTING DARI SERVER'
 #Init Variable
 APPLICATION="Sistem Informasi Kepegawaian Kota Pekalongan 2019"
 _APP_NAME="simpeg"

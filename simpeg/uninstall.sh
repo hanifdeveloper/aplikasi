@@ -33,7 +33,7 @@ rm simpeg_cronjob
 # exec bash
 }
 
-# Main Program
+delete_application(){
 echo "Uninstalling Webserver ..."
 echo "=========================="
 sudo service apache2 stop
@@ -64,3 +64,27 @@ delete_signature_app
 echo "Restarting Server ..."
 sleep 2s
 sudo reboot
+}
+
+exit_apps(){
+echo $1; sleep 1; clear; exit;
+}
+
+show_form(){
+$1 # Running Function
+form_return=$? # Catch Error Code Dialog (0: success)
+case $form_return in
+    1) exit_apps "Application aborted";;
+    255) exit_apps "Application terminated";;
+esac
+}
+
+init_app(){
+dialog --clear --backtitle "$APPLICATION" \
+--checklist "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60 2> $_RESULT
+}
+
+# Main Program
+show_form init_app
+pilihan=`cat $_RESULT`
+echo pilihan

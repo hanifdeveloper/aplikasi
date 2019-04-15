@@ -11,6 +11,8 @@ _CONF_VHOST='/etc/apache2/sites-available'
 _VHOST="$_BASE_VHOST/$_APP_NAME"
 _DIR_SQL="$_VHOST/upload/sql"
 
+_RESULT=`mktemp`
+
 delete_signature_app(){
 # Remove Message of the Day
 sudo rm -rf /etc/motd
@@ -88,3 +90,5 @@ dialog --clear --backtitle "$APPLICATION" \
 show_form init_app
 pilihan=`cat $_RESULT`
 echo pilihan
+
+rm -f $_RESULT # Clear Result

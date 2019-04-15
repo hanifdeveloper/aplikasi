@@ -83,7 +83,7 @@ esac
 
 init_app(){
 dialog --clear --backtitle "$APPLICATION" \
---checklist "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60 2> $_RESULT
+--yesno "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60 2> $_RESULT
 }
 
 # Main Program

@@ -1,5 +1,7 @@
 #!/bin/bash
-# Running Application : bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg.sh)
+# Running Application : 
+# $. bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg/install.sh)
+
 # Init Variable
 APPLICATION="Sistem Informasi Kepegawaian Kota Pekalongan 2019"
 _APP_NAME="simpeg"
@@ -90,9 +92,6 @@ echo "======================"
 fileConfigApache='/etc/apache2/apache2.conf' # check location: sudo find /etc/ -name apache2.conf | grep "apache2"
 fileConfigPHP='/etc/php/7.0/apache2/php.ini' # check location: sudo find /etc/ -name php.ini | grep "apache2"
 fileConfigMySQL='/etc/mysql/my.cnf'# check location: sudo find /etc -name my.cnf | grep "mysql"
-
-# crontab -l -u <user> | sed 's/find/replace/g' | crontab -u <user> -
-# crontab -l -u <user> | sed '/find/d' | crontab -u <user> -
 
 sudo grep -q 'ServerSignature Off' $fileConfigApache && sudo sed -i 's:ServerSignature Off:ServerSignature Off:' $fileConfigApache || echo 'ServerSignature Off' | sudo tee --append $fileConfigApache > /dev/null
 sudo grep -q 'ServerTokens Prod' $fileConfigApache && sudo sed -i 's:ServerTokens Prod:ServerTokens Prod:' $fileConfigApache || echo 'ServerTokens Prod' | sudo tee --append $fileConfigApache > /dev/null

@@ -1,7 +1,4 @@
 #!/bin/bash
-# Running Application : 
-# $. bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg/uninstall.sh)
-
 VHOST='/var/www/simpeg'
 echo "Uninstalling Webserver ..."
 echo "=========================="

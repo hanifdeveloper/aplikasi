@@ -1,7 +1,4 @@
 #!/bin/bash
-# Running Application : 
-# $. bash <(curl -s https://raw.githubusercontent.com/hanifdeveloper/aplikasi/master/simpeg/install.sh)
-
 # Init Variable
 APPLICATION="Sistem Informasi Kepegawaian Kota Pekalongan 2019"
 _APP_NAME="simpeg"

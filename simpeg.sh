@@ -13,8 +13,8 @@ _DIR_SQL="$_VHOST/upload/sql"
 
 # Git Configuration
 _GIT_URLS="bitbucket.org/kominfopklcity/web-application-simpeg.git"
-_GIT_USER="psipdinkominfo"
-_GIT_PASS="psipdeveloper2019"
+_GIT_USER=""
+_GIT_PASS=""
 
 _RESULT=`mktemp`
 _FILE_SQL=()

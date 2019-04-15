@@ -71,6 +71,7 @@ echo $1; sleep 1; clear; exit;
 }
 
 # Main Program
+sudo dpkg --configure -a
 dialog --clear --backtitle "$APPLICATION" \
 --yesno "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60
 # Catch Error Code Dialog (0: success)

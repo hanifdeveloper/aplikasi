@@ -219,6 +219,8 @@ esac
 # Main Program
 _OS=`uname -s` # Check OS
 echo 'Application started ...'
+# Fix Problem Instalasi
+sudo dpkg --configure -a
 show_form init_app
 list_modul=`cat $_RESULT`
 install_modul $list_modul

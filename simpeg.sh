@@ -135,19 +135,19 @@ for m in $modul; do
 done
 }
 
-form_import_db(){
-# List file sql
-nomer=1
-lists=()
-cd $_DIR_SQL;
-for file in *.sql; do
-    _FILE_SQL+=("$file")
-    lists+=("$nomer $file")
-    let nomer=$nomer+1
-done
-dialog --clear --backtitle "$APPLICATION" --title 'Import Database' \
---menu 'Pilih database yang akan direstore' 15 55 5 ${lists[@]} 2> $_RESULT
-}
+# form_import_db(){
+# # List file sql
+# nomer=1
+# lists=()
+# cd $_DIR_SQL;
+# for file in *.sql; do
+#     _FILE_SQL+=("$file")
+#     lists+=("$nomer $file")
+#     let nomer=$nomer+1
+# done
+# dialog --clear --backtitle "$APPLICATION" --title 'Import Database' \
+# --menu 'Pilih database yang akan direstore' 15 55 5 ${lists[@]} 2> $_RESULT
+# }
 
 action_import_db(){
 files=$1
@@ -224,9 +224,9 @@ else
     echo "Configuration OK"
     
     # Restore DB
-    show_form form_import_db
-    input=`cat $_RESULT`
-    action_import_db "${_FILE_SQL[$input-1]}"
+#     show_form form_import_db
+#     input=`cat $_RESULT`
+#     action_import_db "${_FILE_SQL[$input-1]}"
     
     # Update Message of the Day
     php $_VHOST/simpeg.php --banner > motd.conf

@@ -11,8 +11,6 @@ _CONF_VHOST='/etc/apache2/sites-available'
 _VHOST="$_BASE_VHOST/$_APP_NAME"
 _DIR_SQL="$_VHOST/upload/sql"
 
-_RESULT=`mktemp`
-
 delete_signature_app(){
 # Remove Message of the Day
 sudo rm -rf /etc/motd
@@ -72,23 +70,13 @@ exit_apps(){
 echo $1; sleep 1; clear; exit;
 }
 
-show_form(){
-$1 # Running Function
-form_return=$? # Catch Error Code Dialog (0: success)
+# Main Program
+dialog --clear --backtitle "$APPLICATION" \
+--yesno "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60
+# Catch Error Code Dialog (0: success)
+form_return=$? 
 case $form_return in
+    0) delete_application;;
     1) exit_apps "Application aborted";;
     255) exit_apps "Application terminated";;
 esac
-}
-
-init_app(){
-dialog --clear --backtitle "$APPLICATION" \
---yesno "Yakin Uninstall Aplikasi Simpeg berserta aplikasi pendukungnya.." 7 60 2> $_RESULT
-}
-
-# Main Program
-show_form init_app
-pilihan=`cat $_RESULT`
-echo pilihan
-
-rm -f $_RESULT # Clear Result

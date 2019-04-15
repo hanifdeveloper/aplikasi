@@ -197,6 +197,8 @@ $vMYSQL
 $1
 "
 dialog --title "Instalation Complete" --backtitle "$APPLICATION" --msgbox "$result" 20 100;
+# Reload Configuration
+exec bash
 clear
 exit
 }
@@ -253,8 +255,6 @@ else
     echo "============================"
     install_modul config_app
     php $_VHOST/simpeg.php --app-init
-    # Reload Configuration
-    exec bash
     echo "Configuration OK"
     
     # Restore DB

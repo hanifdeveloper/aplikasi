@@ -198,9 +198,10 @@ $1
 "
 dialog --title "Instalation Complete" --backtitle "$APPLICATION" --msgbox "$result" 20 100;
 # Reload Configuration
-exec bash
 clear
-exit
+cd $HOME;
+exec bash
+# exit
 }
 
 exit_apps(){
